@@ -65,34 +65,51 @@ class PKSecurePinViewController : UIViewController
         super.init(nibName: nil, bundle: nil)
     }
     
+    //MARK: Setup secure textfields
+    
     func initTextFields() {
         
-        let width = 100.0
-        let space = 10.0
+        let topPos = 50
         
-        firstPinTextField = PKSecureTextField.init(frame: CGRect.init(x: 5, y: 10, width: width, height: 44))
+        firstPinTextField = PKSecureTextField.init(frame: CGRect.init(origin: CGPoint.init(x: 35, y: topPos), size: self.sizeFrame()))
         
-        secondPinTextField = PKSecureTextField.init(frame: CGRect.init(x: firstPinTextField.frame.origin.x + CGFloat(width) + CGFloat(space),
-                                                                       y: 10, width: CGFloat(width), height: 44))
+        secondPinTextField = self.getSecureTextField(textField: firstPinTextField, topPos: topPos)
         
-        thirdPinTextField = PKSecureTextField.init(frame: CGRect.init(x: secondPinTextField.frame.origin.x + CGFloat(width) + CGFloat(space),
-                                                                      y: 10, width: CGFloat(width), height: 44))
+        thirdPinTextField = self.getSecureTextField(textField: secondPinTextField, topPos: topPos)
         
-        forthPinTextField = PKSecureTextField.init(frame: CGRect.init(x: thirdPinTextField.frame.origin.x + CGFloat(width) + CGFloat(space),
-                                                                      y: 10, width: CGFloat(width), height: 44))
+        forthPinTextField = self.getSecureTextField(textField: thirdPinTextField, topPos: topPos)
         
-        let yConfirmPinFrame = firstPinTextField.frame.origin.y + firstPinTextField.frame.size.height + 10
+        let topPosConfirmPinFrame = Int(firstPinTextField.frame.origin.y + firstPinTextField.frame.size.height + 10)
         
-        confirmPin1 = PKSecureTextField.init(frame: CGRect.init(x: 5, y: yConfirmPinFrame, width: CGFloat(width), height: 44))
+        confirmPin1 = PKSecureTextField.init(frame: CGRect.init(origin: CGPoint.init(x: 35, y: topPosConfirmPinFrame), size: self.sizeFrame()))
         
-        confirmPin2 = PKSecureTextField.init(frame: CGRect.init(x: confirmPin1.frame.origin.x + CGFloat(width) + CGFloat(space),
-                                                                y: yConfirmPinFrame, width: CGFloat(width), height: 44))
+        confirmPin2 = self.getSecureTextField(textField: confirmPin1, topPos: topPosConfirmPinFrame)
         
-        confirmPin3 = PKSecureTextField.init(frame: CGRect.init(x: confirmPin2.frame.origin.x + CGFloat(width) + CGFloat(space),
-                                                                y: yConfirmPinFrame, width: CGFloat(width), height: 44))
+        confirmPin3 = self.getSecureTextField(textField: confirmPin2, topPos: topPosConfirmPinFrame)
         
-        confirmPin4 = PKSecureTextField.init(frame: CGRect.init(x: confirmPin3.frame.origin.x + CGFloat(width) + CGFloat(space),
-                                                                y: yConfirmPinFrame, width: CGFloat(width), height: 44))
+        confirmPin4 = self.getSecureTextField(textField: confirmPin3, topPos: topPosConfirmPinFrame)
+    }
+    
+    func getSecureTextField(textField: PKSecureTextField, topPos: Int) -> PKSecureTextField {
+        return PKSecureTextField.init(frame: CGRect.init(origin: self.pointFrame(textField: textField, topPos: topPos),
+                                                         size: self.sizeFrame()))
+    }
+    
+    func pointFrame(textField: PKSecureTextField, topPos: Int) -> CGPoint {
+        
+        let width = 100
+        let space = 10
+//        let topPos = 50
+        
+        return CGPoint.init(x: Int(textField.frame.origin.x) + width + space, y: topPos)
+    }
+    
+    func sizeFrame() -> CGSize {
+        
+        let width = 100
+        let height = 44
+        
+        return CGSize.init(width: width, height: height)
     }
     
     // MARK: - Private Methods
@@ -119,29 +136,23 @@ class PKSecurePinViewController : UIViewController
     fileprivate func enableTextFields(_ isEnable:Bool)
     {
         firstPinTextField.isEnabled  = isEnable
-        secondPinTextField.isEnabled  = isEnable
+        secondPinTextField.isEnabled = isEnable
         thirdPinTextField.isEnabled  = isEnable
         forthPinTextField.isEnabled  = isEnable
     }
     
     // MARK: - Self Methods
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    override func viewWillAppear(_ animated: Bool)
-    {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.title = "Secure Pin"
         self.view.backgroundColor = UIColor.white
         self.initTextFields()
          initialise()
 //        self.resetOktaPin()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
     }
     
     override func didReceiveMemoryWarning() {
@@ -163,6 +174,8 @@ class PKSecurePinViewController : UIViewController
     
     fileprivate func addTargetForTextDidChange(textfield: PKSecureTextField)
     {
+        textfield.isSecureTextEntry = true
+        textfield.textAlignment = .center
         textfield.deleteDelegate = self
         textfield.keyboardType = .numberPad
         self.view.addSubview(textfield)
