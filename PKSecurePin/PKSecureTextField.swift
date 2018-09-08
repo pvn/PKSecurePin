@@ -84,6 +84,7 @@ extension PKSecureTextField: UITextFieldDelegate
         return true
     }
     
+    @available(iOS 10.0, *)
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
         print("UITextFieldDidEndEditingReason")
         
