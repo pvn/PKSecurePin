@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "PKSecurePin"
-  s.version      = "1.0"
+  s.version      = "1.0.2"
   s.summary      = "Elegant Secure PIN with 4 digits in Swift"
 
   # This description is used to generate tags and improve search results.
@@ -54,7 +54,7 @@ Pod::Spec.new do |s|
   s.author             = { "Praveen Kumar Shrivastav" => "praveen.sunsetpoint@gmail.com" }
   # Or just: s.author    = "Praveen Kumar Shrivastav"
   # s.authors            = { "Praveen Kumar Shrivastav" => "praveen.sunsetpoint@gmail.com" }
-  # s.social_media_url   = "http://twitter.com/Praveen Kumar Shrivastav"
+  # s.social_media_url   = "http://twitter.com/praveen_tech"
 
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
@@ -63,10 +63,10 @@ Pod::Spec.new do |s|
   #
 
   # s.platform     = :ios
-  # s.platform     = :ios, "5.0"
+  # s.platform     = :ios, "10.0"
 
   #  When using multiple platforms
-  s.ios.deployment_target = "9.0"
+  s.ios.deployment_target = "10.0"
   # s.osx.deployment_target = "10.7"
   # s.watchos.deployment_target = "2.0"
   # s.tvos.deployment_target = "9.0"
