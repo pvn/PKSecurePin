@@ -19,6 +19,13 @@ Elegant Secure PIN with 4 digits in Swift
 
 <img src="./demo.gif" width="200" alt="Screenshot" />
 
+# Installation
+### CocoaPods
+In your `Podfile`:
+```
+pod "PKSecurePin"
+```
+
 # Usage
 ```swift
        
