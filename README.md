@@ -29,9 +29,11 @@ pod "PKSecurePin"
 
 # Usage
 ```swift
-       
-        // create an instance of PKSecurePinViewController
-        let pinViewC  = PKSecurePinViewController.init()
+       class ViewController: UIViewController, UIPopoverPresentationControllerDelegate, PKSecurePinControllerDelegate
+        // create an instance of PKSecurePinViewController, with how many PIN, OTP or confirmation, position from top
+        let pinViewC  = PKSecurePinViewController.init(numberOfPins: 4, withconfirmation: false, topPos: 230)
+        //set the deelgate
+        pinViewC.delegate = self
         
        // create the navigation controller
         let pinNav = UINavigationController(rootViewController: pinViewC)        
@@ -46,9 +48,7 @@ pod "PKSecurePin"
         popover?.sourceView = self.view
 
         //popover position
-        popover?.sourceRect = CGRect(x: UIScreen.main.bounds.width * 0.5 - 200, 
-                                     y: UIScreen.main.bounds.height * 0.5 - 100, 
-                                     width: 400, height: 200)
+        popover?.sourceRect = CGRect(x: UIScreen.main.bounds.width * 0.5 - UIScreen.main.bounds.width * 0.25, y: UIScreen.main.bounds.height * 0.5 - 100, width: UIScreen.main.bounds.width * 0.5, height: 200)
         
         //present the navigation controller
         self.present(pinNav, animated: true, completion: nil)
