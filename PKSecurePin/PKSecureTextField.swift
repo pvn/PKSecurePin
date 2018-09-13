@@ -12,7 +12,6 @@ struct PKSecurePinError
 {
     var errorString:String
     var errorCode:Int
-    var errorLblCos:CGFloat
     var errorIsHidden:Bool
 }
 
@@ -26,6 +25,7 @@ protocol PKSecureTextFieldDelegate {
 class PKSecureTextField: UITextField {
     
     var deleteDelegate: PKSecureTextFieldDelegate?
+    
     override func deleteBackward() {
         // Need to call this before super or the textfield edit may already be in place
         self.deleteDelegate?.secureTextFieldDidSelectDeleteButton(self)
@@ -39,6 +39,7 @@ class PKSecureTextField: UITextField {
     
     required override init(frame: CGRect) {
         super.init(frame: frame)
+        self.isEnabled = false
         self.deleteDelegate = self as? PKSecureTextFieldDelegate
         self.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged)
         setTextButtomBorder()
@@ -80,7 +81,7 @@ extension PKSecureTextField: UITextFieldDelegate
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool
     {
-        self.deleteDelegate?.updateError(PKSecurePinError(errorString:"", errorCode: 103, errorLblCos: 0, errorIsHidden: true))
+        self.deleteDelegate?.updateError(PKSecurePinError(errorString:"", errorCode: 103, errorIsHidden: true))
         return true
     }
     
@@ -88,10 +89,14 @@ extension PKSecureTextField: UITextFieldDelegate
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
         print("UITextFieldDidEndEditingReason")
         
-        if (textField.text!.count > 1) {
-            
-            self.deleteDelegate?.writeToTextFieldOnDidEndEditing(textField, withDigit: (textField.text?.last)!)
+        //block the execution or avoid executing the next use case if more than 1 digits entered
+        if ((textField.text?.count)! > 1)
+        {
+            writeToTextField(textField, withDigit: (textField.text?.last)!)
+            return
         }
+        
+        self.deleteDelegate?.secureTextFieldDidChange(textField)
     }
     
     func writeToTextField(_ textField: UITextField, withDigit: Character) {

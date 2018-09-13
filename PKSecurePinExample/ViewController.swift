@@ -8,7 +8,12 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIPopoverPresentationControllerDelegate {
+class ViewController: UIViewController, UIPopoverPresentationControllerDelegate, PKSecurePinControllerDelegate {
+    
+    func didFinishSecurePin() {
+        print("success")
+    }
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,19 +27,20 @@ class ViewController: UIViewController, UIPopoverPresentationControllerDelegate 
     
     override func viewDidAppear(_ animated: Bool) {
         
-        let pinViewC  = PKSecurePinViewController.init()
+        let pinViewC  = PKSecurePinViewController.init(numberOfPins: 4, withconfirmation: false, topPos: 230)
+        pinViewC.delegate = self
         
         let pinNav = UINavigationController(rootViewController: pinViewC)
         
         pinNav.modalPresentationStyle = .popover
         //pinview controller position
-        pinViewC.preferredContentSize = CGSize(width: 500, height: 200)
+        pinViewC.preferredContentSize = CGSize(width: UIScreen.main.bounds.width * 0.5, height: 200)
         
         let popover = pinNav.popoverPresentationController
         popover?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
         popover?.sourceView = self.view
         //popover position
-        popover?.sourceRect = CGRect(x: UIScreen.main.bounds.width * 0.5 - 200, y: UIScreen.main.bounds.height * 0.5 - 100, width: 400, height: 200)
+        popover?.sourceRect = CGRect(x: UIScreen.main.bounds.width * 0.5 - UIScreen.main.bounds.width * 0.25, y: UIScreen.main.bounds.height * 0.5 - 100, width: UIScreen.main.bounds.width * 0.5, height: 200)
         
         self.present(pinNav, animated: true, completion: nil)
     }
