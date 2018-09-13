@@ -18,6 +18,7 @@ Elegant Secure PIN with 4 digits in Swift
 * Disallow to chose any input manually
 
 <img src="./demo.gif" width="200" alt="Screenshot" />
+<img src="./iphone_demo.gif" width="200" alt="Screenshot" />
 
 # Installation
 ### CocoaPods
