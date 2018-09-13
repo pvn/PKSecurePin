@@ -32,7 +32,7 @@ pod "PKSecurePin"
        class ViewController: UIViewController, UIPopoverPresentationControllerDelegate, PKSecurePinControllerDelegate
         // create an instance of PKSecurePinViewController, with how many PIN, OTP or confirmation, position from top
         let pinViewC  = PKSecurePinViewController.init(numberOfPins: 4, withconfirmation: false, topPos: 230)
-        //set the deelgate
+        //set the delegate
         pinViewC.delegate = self
         
        // create the navigation controller
