@@ -8,9 +8,9 @@
 
 Pod::Spec.new do |s|
   s.name         = "PKSecurePin"
-  s.version      = "1.0.3"
+  s.version      = "1.0.4"
   s.summary      = "Elegant Secure PIN with 4 digits in Swift"
-  s.description  = 'Elegant Secure PIN with 4 digits in Swift'
+  s.description  = 'Elegant Secure PIN with 4 digits in Swift with confirmation PIN as well with configuration'
   s.homepage     = "https://github.com/pvn/PKSecurePin"
   s.screenshots  = "https://github.com/pvn/PKSecurePin/blob/master/demo.gif", "https://github.com/pvn/PKSecurePin/blob/master/iphone_demo.gif"
   s.author             = { "Praveen Kumar Shrivastav" => "praveen.sunsetpoint@gmail.com" }
