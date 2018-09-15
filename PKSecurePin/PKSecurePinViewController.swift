@@ -64,10 +64,11 @@ public class PKSecurePinViewController : UIViewController
     var withConfirmationPIN = false
     
     public init(numberOfPins: Int, withconfirmation: Bool, topPos: Int) {
-        super.init(nibName: nil, bundle: nil)
+        
         self.numberOfPins = numberOfPins
         self.withConfirmationPIN = withconfirmation
         self.topPos = topPos
+        super.init(nibName: nil, bundle: nil)
         
     }
     
