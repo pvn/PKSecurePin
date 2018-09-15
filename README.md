@@ -10,12 +10,12 @@ Elegant Secure PIN with dynamic inputs digits in Swift
 
 **Feature:**
 * Ease to use
-* Dynamic digit pin input with confirm pin input
-* Accept only numeric digit as input
-* 1 numeric digit length for each input
+* Dynamic pins with or without confirmation pin based on configuration
+* Accept only digit as input
+* Restrict to enter 1 digit per input
 * Auto jump to immediate next input on every insertion
 * Auto jump to immediate previous input on every deletion
-* Disallow to chose any input manually
+* Restrict the input or to select other PIN without entering the digit for current PIN
 
 <img src="./demo.gif" width="200" alt="Screenshot" />
 <img src="./iphone_demo.gif" width="200" alt="Screenshot" />
