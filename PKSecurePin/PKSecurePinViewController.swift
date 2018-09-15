@@ -21,12 +21,12 @@ extension Array where Element: Comparable {
     }
 }
 
-protocol PKSecurePinControllerDelegate {
+@objc public protocol PKSecurePinControllerDelegate: class {
     
     func didFinishSecurePin() -> Void
 }
 
-class PKSecurePinViewController : UIViewController
+public class PKSecurePinViewController : UIViewController
 {
     let limitLength = 1
     let digitLength = 6
@@ -70,7 +70,7 @@ class PKSecurePinViewController : UIViewController
         self.topPos = topPos
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -157,11 +157,11 @@ class PKSecurePinViewController : UIViewController
     }
     
     // MARK: - Self Methods
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         self.title = "Enter PIN"
@@ -185,7 +185,7 @@ class PKSecurePinViewController : UIViewController
         self.handleInputFields()
     }
     
-    override func didReceiveMemoryWarning() {
+    override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
@@ -322,7 +322,7 @@ class PKSecurePinViewController : UIViewController
                 itemsOfFirstSets.append(textField.text!)
             }
             else {
-            //for second set
+                //for second set
                 itemsOfSecondSets.append(textField.text!)
             }
             i = i+1
@@ -334,11 +334,11 @@ class PKSecurePinViewController : UIViewController
 
 extension PKSecurePinViewController : UITextFieldDelegate
 {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         return false
     }
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
+    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
     {
         return true
     }
@@ -365,7 +365,7 @@ extension PKSecurePinViewController  : PKSecureTextFieldDelegate
                 handleInputFields()
             }
         }
-        else {            
+        else {
             updateError(PKSecurePinError(errorString:"", errorCode: 103, errorIsHidden: true))
         }
     }
@@ -381,9 +381,6 @@ extension PKSecurePinViewController  : PKSecureTextFieldDelegate
             // call logic to handle input fields after text field did change
             handleInputFields()
         }
-        
-        //enable or disable submit button on input
-//        tangibleSubmitButtonOnValidInput()
     }
     
     func writeToTextFieldOnDidEndEditing(_ textField: UITextField, withDigit: Character) {
