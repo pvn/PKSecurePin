@@ -26,7 +26,7 @@ In your `Podfile`:
 ```
 pod "PKSecurePin"
 ```
-### CocoaPods
+### Manual
 Copy the entire `PKSecurePin` folder which contains two swift files and add to your project
 ```
 cp -rf PKSecurePin/ <to_your_project_dir>
