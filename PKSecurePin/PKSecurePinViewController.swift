@@ -63,7 +63,7 @@ public class PKSecurePinViewController : UIViewController
     
     var withConfirmationPIN = false
     
-    init(numberOfPins: Int, withconfirmation: Bool, topPos: Int) {
+    public func init(numberOfPins: Int, withconfirmation: Bool, topPos: Int) {
         super.init(nibName: nil, bundle: nil)
         self.numberOfPins = numberOfPins
         self.withConfirmationPIN = withconfirmation
@@ -343,7 +343,7 @@ extension PKSecurePinViewController : UITextFieldDelegate
         return true
     }
     
-    func showMessage(_ error:PKSecurePinError)
+    public func showMessage(_ error:PKSecurePinError)
     {
         self.errorLbl!.isHidden           = error.errorIsHidden
         self.errorLbl!.text               = error.errorString
