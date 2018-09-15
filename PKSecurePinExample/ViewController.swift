@@ -7,13 +7,17 @@
 //
 
 import UIKit
+import PKSecurePin
 
 class ViewController: UIViewController, UIPopoverPresentationControllerDelegate, PKSecurePinControllerDelegate {
     
-    func didFinishSecurePin() {
-        print("success")
-    }
+    // create an instance of PKSecurePinViewController, with how many PIN, OTP or confirmation, position from top
+    var pinViewC = PKSecurePinViewController.init(numberOfPins: 6, withconfirmation: true, topPos: 230)
     
+    func didFinishSecurePin() {
+        //show the message if you want to display on success, else comment the below line
+        pinViewC.showMessage(PKSecurePinError(errorString:"Success", errorCode: 200, errorIsHidden: false))
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,21 +31,30 @@ class ViewController: UIViewController, UIPopoverPresentationControllerDelegate,
     
     override func viewDidAppear(_ animated: Bool) {
         
-        let pinViewC  = PKSecurePinViewController.init(numberOfPins: 4, withconfirmation: false, topPos: 230)
+        // set the background color for PIN controller
+        pinViewC.view.backgroundColor = UIColor.white
+        
+        //set the delegate
         pinViewC.delegate = self
         
+        // create the pin navigation controller
         let pinNav = UINavigationController(rootViewController: pinViewC)
         
+        // set the presentation style
         pinNav.modalPresentationStyle = .popover
+        
         //pinview controller position
         pinViewC.preferredContentSize = CGSize(width: UIScreen.main.bounds.width * 0.5, height: 200)
         
+        // create an instance for popover
         let popover = pinNav.popoverPresentationController
         popover?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
         popover?.sourceView = self.view
+        
         //popover position
         popover?.sourceRect = CGRect(x: UIScreen.main.bounds.width * 0.5 - UIScreen.main.bounds.width * 0.25, y: UIScreen.main.bounds.height * 0.5 - 100, width: UIScreen.main.bounds.width * 0.5, height: 200)
         
+        //present the pin navigation controller
         self.present(pinNav, animated: true, completion: nil)
     }
 }

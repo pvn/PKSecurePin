@@ -1,0 +1,16 @@
+PODS:
+  - PKSecurePin (1.0.4)
+
+DEPENDENCIES:
+  - PKSecurePin
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - PKSecurePin
+
+SPEC CHECKSUMS:
+  PKSecurePin: 54ae977f20bf856f0ebb41b050f6b00cc283c914
+
+PODFILE CHECKSUM: 540d526d64bd5cf5a23c5dcb0f24b0ef4991f93f
+
+COCOAPODS: 1.5.3

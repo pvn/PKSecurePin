@@ -8,8 +8,7 @@
 
 import UIKit
 
-struct PKSecurePinError
-{
+struct PKSecurePinError {
     var errorString:String
     var errorCode:Int
     var errorIsHidden:Bool
@@ -39,14 +38,22 @@ class PKSecureTextField: UITextField {
     
     required override init(frame: CGRect) {
         super.init(frame: frame)
-        self.isEnabled = false
-        self.deleteDelegate = self as? PKSecureTextFieldDelegate
+        
+        self.configForTextField()
         self.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged)
+    }
+    
+    func configForTextField() {
+        
+        self.isEnabled = false
+        self.isSecureTextEntry = true
+        self.textAlignment = .center
+        self.keyboardType = .numberPad
+        
         setTextButtomBorder()
     }
     
-    func setTextButtomBorder()
-    {
+    func setTextButtomBorder() {
         let bottomBorder = CALayer()
         bottomBorder.frame = CGRect(x: 0.0, y: self.frame.size.height - 1, width: self.frame.size.width, height: 1.5)
         bottomBorder.backgroundColor = UIColor.black.cgColor
@@ -57,8 +64,7 @@ class PKSecureTextField: UITextField {
 extension PKSecureTextField: UITextFieldDelegate
 {
     //MARK: UITextField delegate methods
-    @objc func textFieldDidChange(textField: UITextField)
-    {
+    @objc func textFieldDidChange(textField: UITextField) {
         //block the execution or avoid executing the next use case if more than 1 digits entered
         if ((textField.text?.count)! > 1)
         {
@@ -73,14 +79,12 @@ extension PKSecureTextField: UITextFieldDelegate
         return false
     }
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
-    {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool  {
         return true
     }
     
     
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool
-    {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         self.deleteDelegate?.updateError(PKSecurePinError(errorString:"", errorCode: 103, errorIsHidden: true))
         return true
     }
@@ -90,12 +94,10 @@ extension PKSecureTextField: UITextFieldDelegate
         print("UITextFieldDidEndEditingReason")
         
         //block the execution or avoid executing the next use case if more than 1 digits entered
-        if ((textField.text?.count)! > 1)
-        {
+        if ((textField.text?.count)! > 1) {
             writeToTextField(textField, withDigit: (textField.text?.last)!)
             return
         }
-        
         self.deleteDelegate?.secureTextFieldDidChange(textField)
     }
     

@@ -29,29 +29,43 @@ pod "PKSecurePin"
 
 # Usage
 ```swift
-       class ViewController: UIViewController, UIPopoverPresentationControllerDelegate, PKSecurePinControllerDelegate
-        // create an instance of PKSecurePinViewController, with how many PIN, OTP or confirmation, position from top
-        let pinViewC  = PKSecurePinViewController.init(numberOfPins: 4, withconfirmation: false, topPos: 230)
-        //set the delegate
-        pinViewC.delegate = self
-        
-       // create the navigation controller
-        let pinNav = UINavigationController(rootViewController: pinViewC)        
-        pinNav.modalPresentationStyle = .popover
+            // adopt the protocol
+            class ViewController: UIViewController, UIPopoverPresentationControllerDelegate, PKSecurePinControllerDelegate
+            
+            // create an instance of PKSecurePinViewController, with how many PIN, OTP or confirmation, position from top
+            var pinViewC = PKSecurePinViewController.init(numberOfPins: 6, withconfirmation: true, topPos: 230)
+            
+            // PKSecurePinControllerDelegate methods implementation
+            func didFinishSecurePin() {
+                //show the message if you want to display on success, else comment the below line
+                pinViewC.showMessage(PKSecurePinError(errorString:"Success", errorCode: 200, errorIsHidden: false))
+            }
+            
+            // set the background color for PIN controller
+            pinViewC.view.backgroundColor = UIColor.white
+            
+            //set the delegate
+            pinViewC.delegate = self
 
-        //pinview controller position
-        pinViewC.preferredContentSize = CGSize(width: 500, height: 200)
-        
-        // create an instance for popover
-        let popover = pinNav.popoverPresentationController
-        popover?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
-        popover?.sourceView = self.view
+            // create the pin navigation controller
+            let pinNav = UINavigationController(rootViewController: pinViewC)
 
-        //popover position
-        popover?.sourceRect = CGRect(x: UIScreen.main.bounds.width * 0.5 - UIScreen.main.bounds.width * 0.25, y: UIScreen.main.bounds.height * 0.5 - 100, width: UIScreen.main.bounds.width * 0.5, height: 200)
-        
-        //present the navigation controller
-        self.present(pinNav, animated: true, completion: nil)
+            // set the presentation style
+            pinNav.modalPresentationStyle = .popover
+
+            //pinview controller position
+            pinViewC.preferredContentSize = CGSize(width: UIScreen.main.bounds.width * 0.5, height: 200)
+
+            // create an instance for popover
+            let popover = pinNav.popoverPresentationController
+            popover?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
+            popover?.sourceView = self.view
+
+            //popover position
+            popover?.sourceRect = CGRect(x: UIScreen.main.bounds.width * 0.5 - UIScreen.main.bounds.width * 0.25, y: UIScreen.main.bounds.height * 0.5 - 100, width: UIScreen.main.bounds.width * 0.5, height: 200)
+
+            //present the pin navigation controller
+            self.present(pinNav, animated: true, completion: nil)
 
 
 

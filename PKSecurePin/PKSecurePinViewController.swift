@@ -45,12 +45,6 @@ class PKSecurePinViewController : UIViewController
     var originalPinTFs = [PKSecureTextField]()
     var confirmationPinTFs = [PKSecureTextField]()
     
-
-    var firstPinTextField: PKSecureTextField!
-    var secondPinTextField: PKSecureTextField!
-    var thirdPinTextField: PKSecureTextField!
-    var forthPinTextField: PKSecureTextField!
-    
     var centerCons: NSLayoutConstraint!
     var errLblHeightCons: NSLayoutConstraint!
     var BtmCon: NSLayoutConstraint!
@@ -59,10 +53,6 @@ class PKSecurePinViewController : UIViewController
     var enterPasscodeContainerTopCons: NSLayoutConstraint!
     
     var errorLbl: UILabel?
-    var confirmPin1: PKSecureTextField!
-    var confirmPin2: PKSecureTextField!
-    var confirmPin3: PKSecureTextField!
-    var confirmPin4: PKSecureTextField!
     
     var itemsOfFirstSets = [String]()
     var itemsOfSecondSets = [String]()
@@ -94,20 +84,26 @@ class PKSecurePinViewController : UIViewController
             self.topPos = (self.topPos <= 0) ? Int((self.view.frame.size.height - textFieldSize.height) / 2) : self.topPos
         }
         
-        firstPinTextField = PKSecureTextField.init(frame: CGRect.init(origin: CGPoint.init(x: xPosTextField, y: self.topPos), size: textFieldSize))
-        secondPinTextField = self.getSecureTextField(textField: firstPinTextField, topPos: self.topPos, size: textFieldSize)
-        thirdPinTextField = self.getSecureTextField(textField: secondPinTextField, topPos: self.topPos, size: textFieldSize)
-        forthPinTextField = self.getSecureTextField(textField: thirdPinTextField, topPos: self.topPos, size: textFieldSize)
+        let fpinTextField = PKSecureTextField.init(frame: CGRect.init(origin: CGPoint.init(x: xPosTextField, y: self.topPos), size: textFieldSize))
+        originalPinTFs.insert(fpinTextField, at: 0)
+        
+        for i in 0..<numberOfPins-1 {
+            let pinTextField = self.getSecureTextField(textField: originalPinTFs[i], topPos: self.topPos, size: textFieldSize)
+            originalPinTFs.append(pinTextField)
+        }
     }
     
     fileprivate func initConfirmationSetOfPins() {
         
-        self.topPos = Int(firstPinTextField.frame.origin.y + firstPinTextField.frame.size.height + 10)
+        self.topPos = Int((originalPinTFs.first?.frame.origin.y)! + (originalPinTFs.first?.frame.size.height)! + 10)
         
-        confirmPin1 = PKSecureTextField.init(frame: CGRect.init(origin: CGPoint.init(x: xPosTextField, y: self.topPos), size: textFieldSize))
-        confirmPin2 = self.getSecureTextField(textField: confirmPin1, topPos: self.topPos, size: textFieldSize)
-        confirmPin3 = self.getSecureTextField(textField: confirmPin2, topPos: self.topPos, size: textFieldSize)
-        confirmPin4 = self.getSecureTextField(textField: confirmPin3, topPos: self.topPos, size: textFieldSize)
+        let fpinTextField = PKSecureTextField.init(frame: CGRect.init(origin: CGPoint.init(x: xPosTextField, y: self.topPos), size: textFieldSize))
+        confirmationPinTFs.append(fpinTextField)
+        
+        for i in 0..<numberOfPins-1 {
+            let pinTextField = self.getSecureTextField(textField: confirmationPinTFs[i], topPos: self.topPos, size: textFieldSize)
+            confirmationPinTFs.append(pinTextField)
+        }
     }
     
     func initPins() {
@@ -131,7 +127,7 @@ class PKSecurePinViewController : UIViewController
     func sizeFrame() -> CGSize {
         
         let leftRightMargin = xPosTextField * 2
-        let width = ((Int(self.view.frame.size.width) - leftRightMargin) - (spaceBwTextField*(numberOfPins-1))) / 4
+        let width = ((Int(self.view.frame.size.width) - leftRightMargin) - (spaceBwTextField*(numberOfPins-1))) / numberOfPins
     
         return CGSize.init(width: width, height: heightTextField)
     }
@@ -140,35 +136,24 @@ class PKSecurePinViewController : UIViewController
     
     private func addOriginalSetOfPinsToView() {
         
-        let pinTextFields = [firstPinTextField, secondPinTextField, thirdPinTextField, forthPinTextField] as? [PKSecureTextField]
-        self.setupPinTextFields(pinTextFields: pinTextFields!, confirmPinTextFields: [])
+        self.setupPinTextFields(pinTextFields: originalPinTFs, confirmPinTextFields: [])
         self.view.layoutIfNeeded()
     }
     
     private func addConfirmationSetOfPinsToView() {
         
-        let pinTextFields = [firstPinTextField, secondPinTextField, thirdPinTextField, forthPinTextField] as? [PKSecureTextField]
-        let confirmPinTextFields = [confirmPin1, confirmPin2, confirmPin3, confirmPin4] as? [PKSecureTextField]
-        
-        if pinTextFields?.count == confirmPinTextFields?.count {
-            self.setupPinTextFields(pinTextFields: pinTextFields!, confirmPinTextFields: confirmPinTextFields!)
+        if originalPinTFs.count == confirmationPinTFs.count {
+            self.setupPinTextFields(pinTextFields: originalPinTFs, confirmPinTextFields: confirmationPinTFs)
         }
         self.view.layoutIfNeeded()
     }
     
     func addErrorLabel() {
         
-        self.errorLbl = UILabel.init(frame: CGRect(x:Int(firstPinTextField.frame.maxX), y: topPos + 75, width: 225, height: 20))
+        self.errorLbl = UILabel.init(frame: CGRect(x:Int((originalPinTFs.first?.frame.maxX)! - 10), y: topPos + 75, width: 225, height: 20))
         self.errorLbl?.isHidden = true
         self.errorLbl?.textColor = UIColor.red
         self.view.addSubview(self.errorLbl!)
-    }
-    
-    fileprivate func enableTextFields(_ isEnable:Bool) {
-        firstPinTextField.isEnabled  = isEnable
-        secondPinTextField.isEnabled = isEnable
-        thirdPinTextField.isEnabled  = isEnable
-        forthPinTextField.isEnabled  = isEnable
     }
     
     // MARK: - Self Methods
@@ -180,7 +165,6 @@ class PKSecurePinViewController : UIViewController
         super.viewWillAppear(animated)
         
         self.title = "Enter PIN"
-        self.view.backgroundColor = UIColor.white
         
         // initialize the pins
         self.initPins()
@@ -218,33 +202,23 @@ class PKSecurePinViewController : UIViewController
     }
     
     fileprivate func addTargetForTextDidChange(textfield: PKSecureTextField)  {
-        textfield.isSecureTextEntry = true
-        textfield.textAlignment = .center
         textfield.deleteDelegate = self
-        textfield.keyboardType = .numberPad
         self.view.addSubview(textfield)
         pinFields.append(textfield)
     }
     
-    func resetPins()
-    {
-        self.emptiedTextField(textfields: [self.firstPinTextField, self.secondPinTextField, self.thirdPinTextField, self.forthPinTextField, self.confirmPin1, self.confirmPin2, self.confirmPin3, self.confirmPin4])
-
+    func resetPins() {
+        self.emptiedTextField(textfields: pinFields)
         currentTFIndex = 0
-        
-        //call logic to handle input fields after reseting all pin fields as emptied
-//        handleInputFields()
     }
     
-    func emptiedTextField(textfields: [PKSecureTextField])
-    {
+    func emptiedTextField(textfields: [PKSecureTextField]) {
         for textfield in textfields {
             textfield.text = nil
         }
     }
     
-    func validString(inputString: String?) -> Bool
-    {
+    func validString(inputString: String?) -> Bool {
         guard let text = inputString,
             !text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty else {
                 // this will be reached if the text is nil (unlikely)
@@ -313,7 +287,7 @@ class PKSecurePinViewController : UIViewController
                 self.delegate?.didFinishSecurePin()
             }
             else {
-                    self.updateError(PKSecurePinError(errorString:"Confirm PIN does not match", errorCode: 103, errorIsHidden: false))
+                self.updateError(PKSecurePinError(errorString:"Confirm PIN does not match", errorCode: 103, errorIsHidden: false))
             }
         }
         else
@@ -369,7 +343,7 @@ extension PKSecurePinViewController : UITextFieldDelegate
         return true
     }
     
-    func updateErrorLabel(_ error:PKSecurePinError)
+    func showMessage(_ error:PKSecurePinError)
     {
         self.errorLbl!.isHidden           = error.errorIsHidden
         self.errorLbl!.text               = error.errorString
@@ -417,7 +391,7 @@ extension PKSecurePinViewController  : PKSecureTextFieldDelegate
     }
     
     func updateError(_ error: PKSecurePinError) {
-        self.updateErrorLabel(error)
+        self.showMessage(error)
     }
 }
 
