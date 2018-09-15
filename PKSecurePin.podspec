@@ -18,4 +18,5 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '10.0'
   s.source       = { :git => "https://github.com/pvn/PKSecurePin.git", :tag => s.version.to_s }
   s.source_files  = 'PKSecurePin/*'
+  s.swift_version = "4.0"
 end
