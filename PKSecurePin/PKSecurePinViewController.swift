@@ -63,21 +63,16 @@ public class PKSecurePinViewController : UIViewController
     
     var withConfirmationPIN = false
     
-    public convenience init(numberOfPins: Int, withconfirmation: Bool, topPos: Int) {
-        self.init()
+    public init(numberOfPins: Int, withconfirmation: Bool, topPos: Int) {
+        super.init(nibName: nil, bundle: nil)
         self.numberOfPins = numberOfPins
         self.withConfirmationPIN = withconfirmation
         self.topPos = topPos
         
     }
     
-    init () {
-        // uncomment this line if your class has been inherited from any other class
-        super.init(nibName: nil, bundle: nil)
-    }
-    
     required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("init(coder:) has not been implemented")
     }
     
     //MARK: Setup secure textfields
