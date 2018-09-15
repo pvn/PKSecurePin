@@ -12,7 +12,8 @@ import PKSecurePin
 class ViewController: UIViewController, UIPopoverPresentationControllerDelegate, PKSecurePinControllerDelegate {
     
     // create an instance of PKSecurePinViewController, with how many PIN, OTP or confirmation, position from top
-    var pinViewC = PKSecurePinViewController.init(numberOfPins: 6, withconfirmation: true, topPos: 230)
+    //NOTE: Please specify the correct value for topPos for the PIN text field w.r.t. to iPad & iPhone
+    var pinViewC = PKSecurePinViewController.init(numberOfPins: 6, withconfirmation: true, topPos: 66)
     
     func didFinishSecurePin() {
         //show the message if you want to display on success, else comment the below line

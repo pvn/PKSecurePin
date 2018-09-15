@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct PKSecurePinError {
+public struct PKSecurePinError {
     var errorString:String
     var errorCode:Int
     var errorIsHidden:Bool

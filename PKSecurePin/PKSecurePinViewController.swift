@@ -52,7 +52,7 @@ public class PKSecurePinViewController : UIViewController
     var confirmPinContainerViewCons: NSLayoutConstraint!
     var enterPasscodeContainerTopCons: NSLayoutConstraint!
     
-    var errorLbl: UILabel?
+    public var errorLbl: UILabel?
     
     var itemsOfFirstSets = [String]()
     var itemsOfSecondSets = [String]()
@@ -63,11 +63,17 @@ public class PKSecurePinViewController : UIViewController
     
     var withConfirmationPIN = false
     
-    public func init(numberOfPins: Int, withconfirmation: Bool, topPos: Int) {
-        super.init(nibName: nil, bundle: nil)
+    public convenience init(numberOfPins: Int, withconfirmation: Bool, topPos: Int) {
+        self.init()
         self.numberOfPins = numberOfPins
         self.withConfirmationPIN = withconfirmation
         self.topPos = topPos
+        
+    }
+    
+    init () {
+        // uncomment this line if your class has been inherited from any other class
+        super.init(nibName: nil, bundle: nil)
     }
     
     required public init?(coder aDecoder: NSCoder) {
