@@ -1,5 +1,5 @@
 # PKSecurePin
-Elegant Secure PIN with 4 digits in Swift
+Elegant Secure PIN with dynamic inputs digits in Swift
 
 [![Platform](http://img.shields.io/badge/platform-ios-blue.svg?style=flat
 )](https://developer.apple.com/iphone/index.action)
@@ -10,7 +10,7 @@ Elegant Secure PIN with 4 digits in Swift
 
 **Feature:**
 * Ease to use
-* 4 digit pin input with confirm pin input
+* Dynamic digit pin input with confirm pin input
 * Accept only numeric digit as input
 * 1 numeric digit length for each input
 * Auto jump to immediate next input on every insertion
