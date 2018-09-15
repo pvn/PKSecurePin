@@ -59,7 +59,7 @@ public class PKSecurePinViewController : UIViewController
     
     var passcode      : Array<Int>?
     
-    var delegate: PKSecurePinControllerDelegate?
+    public var delegate: PKSecurePinControllerDelegate?
     
     var withConfirmationPIN = false
     
