@@ -23,7 +23,7 @@ extension Array where Element: Comparable {
 
 @objc public protocol PKSecurePinControllerDelegate: class {
     
-    func didFinishSecurePin() -> Void
+    func didFinishSecurePin(pinValue: String)
 }
 
 public class PKSecurePinViewController : UIViewController
@@ -282,11 +282,11 @@ public class PKSecurePinViewController : UIViewController
             setTFIndex(currentTFIndex)
             
             if (!withConfirmationPIN) {
-                self.delegate?.didFinishSecurePin()
+                self.delegate?.didFinishSecurePin(pinValue: self.pinValue())
                 self.updateError(PKSecurePinError(errorString:"Success", errorCode: 200, errorIsHidden: false))
             }
             else if (withConfirmationPIN && self.validateConfirmPins()) {
-                self.delegate?.didFinishSecurePin()
+                self.delegate?.didFinishSecurePin(pinValue: self.pinValue())
             }
             else {
                 self.updateError(PKSecurePinError(errorString:"Confirm PIN does not match", errorCode: 103, errorIsHidden: false))
@@ -295,6 +295,16 @@ public class PKSecurePinViewController : UIViewController
         else
         {
             setTFIndex(currentTFIndex + 1)
+        }
+    }
+    
+    func pinValue() -> String {
+        if (!withConfirmationPIN) {
+            return itemsOfFirstSets.joined()
+        }
+        else {
+            let finalItems = itemsOfFirstSets + itemsOfSecondSets
+            return finalItems.joined()
         }
     }
     
