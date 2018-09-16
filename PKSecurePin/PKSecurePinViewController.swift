@@ -251,7 +251,6 @@ public class PKSecurePinViewController : UIViewController
     func enableActiveTextField(_ textField: UITextField)
     {
         textField.isEnabled = true
-        //currentTextField.backgroundColor = UIColor.green
         textField.becomeFirstResponder()
     }
     
@@ -282,8 +281,8 @@ public class PKSecurePinViewController : UIViewController
             setTFIndex(currentTFIndex)
             
             if (!withConfirmationPIN) {
-                self.delegate?.didFinishSecurePin(pinValue: self.pinValue())
-                self.updateError(PKSecurePinError(errorString:"Success", errorCode: 200, errorIsHidden: false))
+                self.delegate?.didFinishSecurePin(pinValue: self.valueOfFirstSet())
+//                self.updateError(PKSecurePinError(errorString:"Success", errorCode: 200, errorIsHidden: false))
             }
             else if (withConfirmationPIN && self.validateConfirmPins()) {
                 self.delegate?.didFinishSecurePin(pinValue: self.pinValue())
@@ -342,6 +341,14 @@ public class PKSecurePinViewController : UIViewController
         
         return itemsOfFirstSets.containsSameElements(as: itemsOfSecondSets)
     }
+    
+    func valueOfFirstSet() -> String {
+        itemsOfFirstSets.removeAll()
+        for textField in pinFields {
+            itemsOfFirstSets.append(textField.text!)
+        }
+        return itemsOfFirstSets.joined()
+    }
 }
 
 extension PKSecurePinViewController : UITextFieldDelegate
@@ -359,7 +366,7 @@ extension PKSecurePinViewController : UITextFieldDelegate
     {
         self.errorLbl!.isHidden           = error.errorIsHidden
         self.errorLbl!.text               = error.errorString
-        self.errorLbl?.textColor          = error.errorCode == 200 ? UIColor.green : UIColor.red
+        self.errorLbl?.textColor          = error.errorCode == 200 ? UIColor.blue : UIColor.red
     }
 }
 
