@@ -15,9 +15,11 @@ class ViewController: UIViewController, UIPopoverPresentationControllerDelegate,
     //NOTE: Please specify the correct value for topPos for the PIN text field w.r.t. to iPad & iPhone
     var pinViewC = PKSecurePinViewController.init(numberOfPins: 6, withconfirmation: true, topPos: 66)
     
-    func didFinishSecurePin() {
+    func didFinishSecurePin(pinValue: String) {
+        
         //show the message if you want to display on success, else comment the below line
-        pinViewC.showMessage(PKSecurePinError(errorString:"Success", errorCode: 200, errorIsHidden: false))
+        pinViewC.showMessage(PKSecurePinError(errorString:"Pin Value \(pinValue)", errorCode: 200, errorIsHidden: false))
+        //Go ahead with the business logic which you want to achieve with the PIN
     }
 
     override func viewDidLoad() {
